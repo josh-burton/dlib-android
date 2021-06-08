@@ -12,7 +12,8 @@ android {
 
         ndk {
             // "x86", "x86_64", "armeabi", "armeabi-v7a", "arm64-v8a"
-            abiFilters "x86", "x86_64", "armeabi", "armeabi-v7a", "arm64-v8a"
+//            abiFilters "x86", "x86_64", "armeabi", "armeabi-v7a", "arm64-v8a"
+            abiFilters "x86", "x86_64", "armeabi-v7a", "arm64-v8a"
         }
         externalNativeBuild {
             cmake {
@@ -29,8 +30,8 @@ android {
     // Let gradle pack the shared library into apk.
     sourceSets {
         main {
-            jniLibs.srcDirs = ["src/main/cppLibs/dlib/lib",
-                               "src/main/cppLibs/protobuf/lib"]
+//            jniLibs.srcDirs = ["src/main/cppLibs/dlib/lib",
+//                               "src/main/cppLibs/protobuf/lib"]
         }
     }
     externalNativeBuild {

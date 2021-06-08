@@ -60,7 +60,6 @@ import com.my.demo.dlib.view.FaceLandmarksOverlayView;
 import com.my.jni.dlib.DLibLandmarks68Detector;
 import com.my.jni.dlib.IDLibFaceDetector;
 import com.my.reactive.uiModel.UiModel;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.Collections;

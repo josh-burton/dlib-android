@@ -41,7 +41,6 @@ android {
 }
 
 repositories {
-    maven { url "https://maven.fabric.io/public" }
     // Find the AAR files in the libs folder.
     flatDir { dirs "libs" }
 }

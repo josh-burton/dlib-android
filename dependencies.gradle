@@ -1,8 +1,8 @@
 ext {
-    compileSdkVersion = 25
+    compileSdkVersion = 28
     buildToolsVersion = '25.0.3'
     minSdkVersion = 21
-    targetSdkVersion = 25
+    targetSdkVersion = 28
     sourceCompatibilityVersion = JavaVersion.VERSION_1_7
     targetCompatibilityVersion = JavaVersion.VERSION_1_7
 
@@ -61,7 +61,7 @@ ext {
             rxRelay                : 'com.jakewharton.rxrelay2:rxrelay:2.0.0',
             rxBinding              : "com.jakewharton.rxbinding2:rxbinding:${RX_BINDING_VER}",
             rxBindingRecyclerViewV7: "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${RX_BINDING_VER}",
-            rxPermissions          : 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar',
+            rxPermissions          : 'com.github.tbruyelle:rxpermissions:0.12',
             // View Binding.
             butterKnife            : "com.jakewharton:butterknife:${BUTTER_KNIFE_VER}",
             butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:${BUTTER_KNIFE_VER}",
