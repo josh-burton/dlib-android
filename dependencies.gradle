@@ -14,23 +14,23 @@ ext {
     BOLTS_VER = '1.4.0'
     RETROFIT_VER = "2.1.0"
     OKHTTP_VER = '3.0.1'
-    BUTTER_KNIFE_VER = '8.5.1'
+    BUTTER_KNIFE_VER = '10.2.3'
 
     dep = [
             // Google Support Library.
             supportV4              : "com.android.support:support-v4:$SUPPORT_LIB_VER",
             supportV4CoreUtils     : "com.android.support:support-core-utils:$SUPPORT_LIB_VER",
-            supportAppcompatV7     : "com.android.support:appcompat-v7:$SUPPORT_LIB_VER",
-            supportRecyclerViewV7  : "com.android.support:recyclerview-v7:${SUPPORT_LIB_VER}",
-            supportCardViewV7      : "com.android.support:cardview-v7:${SUPPORT_LIB_VER}",
-            supportGridLayoutV7    : "com.android.support:gridlayout-v7:${SUPPORT_LIB_VER}",
+            supportAppcompatV7     : 'androidx.appcompat:appcompat:1.0.0',
+            supportRecyclerViewV7  : 'androidx.recyclerview:recyclerview:1.0.0',
+            supportCardViewV7      : 'androidx.cardview:cardview:1.0.0',
+            supportGridLayoutV7    : 'androidx.gridlayout:gridlayout:1.0.0',
             supportAnnotations     : "com.android.support:support-annotations:$SUPPORT_LIB_VER",
-            supportDesign          : "com.android.support:design:${SUPPORT_LIB_VER}",
-            supportVectorDrawable  : "com.android.support:support-vector-drawable:${SUPPORT_LIB_VER}",
-            supportPercent         : "com.android.support:percent:${SUPPORT_LIB_VER}",
-            supportTransition      : "com.android.support:transition:${SUPPORT_LIB_VER}",
-            supportConstraintLayout: "com.android.support.constraint:constraint-layout:1.0.2",
-            supportMultidex        : 'com.android.support:multidex:1.0.1',
+            supportDesign          : 'com.google.android.material:material:1.0.0',
+            supportVectorDrawable  : 'androidx.vectordrawable:vectordrawable:1.0.0',
+            supportPercent         : 'androidx.percentlayout:percentlayout:1.0.0',
+            supportTransition      : 'androidx.transition:transition:1.0.0',
+            supportConstraintLayout: 'androidx.constraintlayout:constraintlayout:1.1.3',
+            supportMultidex        : 'androidx.multidex:multidex:2.0.0',
             // Google Play Service.
             playServicesAds        : "com.google.android.gms:play-services-ads:${PLAY_SERVICES_VER}",
             playServicesAnalytics  : "com.google.android.gms:play-services-analytics:${PLAY_SERVICES_VER}",
@@ -61,7 +61,7 @@ ext {
             rxRelay                : 'com.jakewharton.rxrelay2:rxrelay:2.0.0',
             rxBinding              : "com.jakewharton.rxbinding2:rxbinding:${RX_BINDING_VER}",
             rxBindingRecyclerViewV7: "com.jakewharton.rxbinding2:rxbinding-recyclerview-v7:${RX_BINDING_VER}",
-            rxPermissions          : 'com.github.tbruyelle:rxpermissions:0.12',
+            rxPermissions          : 'com.github.tbruyelle:rxpermissions:0.11',
             // View Binding.
             butterKnife            : "com.jakewharton:butterknife:${BUTTER_KNIFE_VER}",
             butterKnifeCompiler    : "com.jakewharton:butterknife-compiler:${BUTTER_KNIFE_VER}",
@@ -88,7 +88,7 @@ ext {
             // TESTING.
             testJunit              : 'junit:junit:4.12',
             testMockito            : 'org.mockito:mockito-core:2.8.9',
-            testEspressoCore       : 'com.android.support.test.espresso:espresso-core:2.2.2',
+            testEspressoCore       : 'androidx.test.espresso:espresso-core:3.1.0',
             testRunner             : 'com.android.support.test:runner:0.5'
     ]
 }

@@ -39,14 +39,15 @@ import android.media.ImageReader;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Size;
 import android.view.Surface;
 import android.view.View;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.my.core.protocol.IProgressBarView;
 import com.my.core.util.ProfilerUtil;
@@ -60,6 +61,7 @@ import com.my.demo.dlib.view.FaceLandmarksOverlayView;
 import com.my.jni.dlib.DLibLandmarks68Detector;
 import com.my.jni.dlib.IDLibFaceDetector;
 import com.my.reactive.uiModel.UiModel;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -142,12 +144,12 @@ public class SampleOfCamera2ApiActivity1
                 .compose(openCameraToGetCameraDevice())
                 .compose(createCaptureSession())
                 .compose(setCaptureRequestAndObserveAvailableImage())
-                .onErrorReturn(new Function<Throwable, Object>() {
-                    @Override
-                    public Object apply(Throwable throwable) throws Exception {
-                        return UiModel.failed(throwable);
-                    }
-                })
+//                .onErrorReturn(new Function<Throwable, Object>() {
+//                    @Override
+//                    public Object apply(Throwable throwable) throws Exception {
+//                        return UiModel.failed(throwable);
+//                    }
+//                })
                 .ofType(UiModel.class)
                 .subscribe(new Consumer<UiModel>() {
                     @Override

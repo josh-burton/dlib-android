@@ -24,8 +24,9 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.view.Surface;
+
+import androidx.annotation.NonNull;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
