@@ -299,12 +299,7 @@ public class SampleOfFacesAndLandmarksActivity2
     }
 
     private Observable<?> initFaceLandmarksDetector() {
-        return DlibModelHelper
-            .getService()
-            // Download the trained model.
-            .downloadFace68Model(
-                this,
-                getApplicationContext().getPackageName())
+        return Observable.just(new File(getFilesDir(),DlibModelHelper.FACE68_FILE))
             // Update progressbar message.
             .observeOn(AndroidSchedulers.mainThread())
             .map(new Function<File, File>() {

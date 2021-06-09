@@ -20,7 +20,9 @@
 
 package com.my.demo.dlib;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -35,8 +37,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.my.core.protocol.IProgressBarView;
 import com.my.core.util.ViewUtil;
+import com.my.demo.dlib.util.DlibModelHelper;
 import com.my.widget.adapter.SampleMenuAdapter;
 import com.my.widget.adapter.SampleMenuAdapter.SampleMenuItem;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +82,28 @@ public class StartActivity
         // List menu.
         mStartMenu.setAdapter(onCreateSampleMenu());
         mStartMenu.setOnItemClickListener(onClickSampleMenuItem());
+
+        copyAssetFile(this, DlibModelHelper.FACE68_FILE, new File(getFilesDir(), DlibModelHelper.FACE68_FILE).getAbsolutePath());
+    }
+
+    public static boolean copyAssetFile(Context context, String srcName, String dstName) {
+        try {
+            InputStream in = context.getAssets().open(srcName);
+            File outFile = new File(dstName);
+            if (outFile.exists())return false;
+            OutputStream out = new FileOutputStream(outFile);
+            byte[] buffer = new byte[1024];
+            int read;
+            while ((read = in.read(buffer)) != -1) {
+                out.write(buffer, 0, read);
+            }
+            in.close();
+            out.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
