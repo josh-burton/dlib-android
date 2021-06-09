@@ -90,7 +90,9 @@ public class StartActivity
         try {
             InputStream in = context.getAssets().open(srcName);
             File outFile = new File(dstName);
-            if (outFile.exists())return false;
+            if (outFile.exists()){
+                outFile.delete();
+            }
             OutputStream out = new FileOutputStream(outFile);
             byte[] buffer = new byte[1024];
             int read;

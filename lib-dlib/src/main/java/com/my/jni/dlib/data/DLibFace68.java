@@ -28,25 +28,25 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class DLibFace68 extends DLibFace {
 
     private static final int CHIN_START = 0;
-    private static final int CHIN_END = 16;
-
-    private static final int EYEBROW_L_START = 17;
-    private static final int EYEBROW_L_END = 21;
-    private static final int EYEBROW_R_START = 22;
-    private static final int EYEBROW_R_END = 26;
-
-    private static final int NOSE_START = 28;
-    private static final int NOSE_END = 35;
-
-    private static final int EYE_L_START = 36;
-    private static final int EYE_L_END = 41;
-    private static final int EYE_R_START = 42;
-    private static final int EYE_R_END = 47;
-
-    private static final int LIPS_OUTER_START = 48;
-    private static final int LIPS_OUTER_END = 59;
-    private static final int LIPS_INNER_START = 60;
-    private static final int LIPS_INNER_END = 67;
+//    private static final int CHIN_END = 16;
+//
+//    private static final int EYEBROW_L_START = 17;
+//    private static final int EYEBROW_L_END = 21;
+//    private static final int EYEBROW_R_START = 22;
+//    private static final int EYEBROW_R_END = 26;
+//
+//    private static final int NOSE_START = 28;
+//    private static final int NOSE_END = 35;
+//
+//    private static final int EYE_L_START = 36;
+//    private static final int EYE_L_END = 41;
+//    private static final int EYE_R_START = 42;
+//    private static final int EYE_R_END = 47;
+//
+//    private static final int LIPS_OUTER_START = 48;
+//    private static final int LIPS_OUTER_END = 59;
+//    private static final int LIPS_INNER_START = 60;
+//    private static final int LIPS_INNER_END = 67;
 
     private final RectF mBound = new RectF();
     private final List<Landmark> mLandmarks = new CopyOnWriteArrayList<>();
@@ -127,42 +127,50 @@ public class DLibFace68 extends DLibFace {
 
     @Override
     public List<Landmark> getLeftEyebrowLandmarks() {
-        return mLandmarks.subList(EYEBROW_L_START, EYEBROW_L_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(EYEBROW_L_START, EYEBROW_L_END + 1);
     }
 
     @Override
     public List<Landmark> getRightEyebrowLandmarks() {
-        return mLandmarks.subList(EYEBROW_R_START, EYEBROW_R_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(EYEBROW_R_START, EYEBROW_R_END + 1);
     }
 
     @Override
     public List<Landmark> getLeftEyeLandmarks() {
-        return mLandmarks.subList(EYE_L_START, EYE_L_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(EYE_L_START, EYE_L_END + 1);
     }
 
     @Override
     public List<Landmark> getRightEyeLandmarks() {
-        return mLandmarks.subList(EYE_R_START, EYE_R_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(EYE_R_START, EYE_R_END + 1);
     }
 
     @Override
     public List<Landmark> getNoseLandmarks() {
-        return mLandmarks.subList(NOSE_START, NOSE_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(NOSE_START, NOSE_END + 1);
     }
 
     @Override
     public List<Landmark> getInnerLipsLandmarks() {
-        return mLandmarks.subList(LIPS_INNER_START, LIPS_INNER_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(LIPS_INNER_START, LIPS_INNER_END + 1);
     }
 
     @Override
     public List<Landmark> getOuterLipsLandmarks() {
-        return mLandmarks.subList(LIPS_OUTER_START, LIPS_OUTER_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(LIPS_OUTER_START, LIPS_OUTER_END + 1);
     }
 
     @Override
     public List<Landmark> getChinLandmarks() {
-        return mLandmarks.subList(CHIN_START, CHIN_END + 1);
+        return mLandmarks.subList(0, 0 + 1);
+//        return mLandmarks.subList(CHIN_START, CHIN_END + 1);
     }
 
     @Override

@@ -186,6 +186,7 @@ JNI_METHOD(prepareFaceRecognitionDetector)(JNIEnv *env, jobject thiz, jstring re
 
 extern "C" JNIEXPORT void JNICALL
 JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jstring detectorPath) {
+    LOGI("L%d: init sFaceLandmarksDetector", __LINE__);
     const char *path = env->GetStringUTFChars(detectorPath, JNI_FALSE);
 
     // Profiler.
@@ -207,9 +208,9 @@ JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jstring dete
 
     env->ReleaseStringUTFChars(detectorPath, path);
 
-    if (sFaceLandmarksDetector.num_parts() != 68) {
-        throwException(env, "It's not a 68 landmarks detector!");
-    }
+//    if (sFaceLandmarksDetector.num_parts() != 68) {
+//        throwException(env, "It's not a 68 landmarks detector!");
+//    }
 }
 
 extern "C" JNIEXPORT jbyteArray JNICALL

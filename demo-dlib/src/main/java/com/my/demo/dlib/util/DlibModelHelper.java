@@ -52,10 +52,7 @@ import io.reactivex.subjects.Subject;
 public class DlibModelHelper {
 
     static final String BASE_URL = "http://dlib.net/files/";
-    static final String FACE68_ZIP_FILE = "shape_predictor_68_face_landmarks.dat.bz2";
-    public static final String FACE68_FILE = "shape_predictor_68_face_landmarks.dat";
-
-    private static final String PREF_KEY_FACE68_ZIP = FACE68_ZIP_FILE;
+    public static final String FACE68_FILE = "shape_predictor_6_dog_face_landmarks.dat";
 
     private static DlibModelHelper sSingleton = null;
 

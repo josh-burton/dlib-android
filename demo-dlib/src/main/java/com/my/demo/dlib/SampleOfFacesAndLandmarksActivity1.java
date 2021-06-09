@@ -155,7 +155,7 @@ public class SampleOfFacesAndLandmarksActivity1
                         // Create camera source.
                         final CameraSource source = new CameraSource.Builder(getContext(), detector)
                             .setRequestedPreviewSize(previewWidth, previewHeight)
-                            .setFacing(CameraSource.CAMERA_FACING_FRONT)
+                            .setFacing(CameraSource.CAMERA_FACING_BACK)
                             .setAutoFocusEnabled(true)
                             .setRequestedFps(30f)
                             .build();
