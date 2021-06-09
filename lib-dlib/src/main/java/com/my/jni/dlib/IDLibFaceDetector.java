@@ -20,6 +20,7 @@
 
 package com.my.jni.dlib;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 
@@ -58,18 +59,7 @@ public interface IDLibFaceDetector {
      *
      * @param path The model (serialized graph) file.
      */
-    void prepareFaceLandmarksDetector(String path);
-
-    /**
-     * Detect face bounds.
-     *
-     * @param bitmap The given photo.
-     * @return A list of {@link DLibFace}.
-     * @throws InvalidProtocolBufferException Fired if the message cannot be
-     *                                        recognized
-     */
-    List<DLibFace> findFaces(Bitmap bitmap)
-            throws InvalidProtocolBufferException;
+    void prepareFaceLandmarksDetector(AssetManager assetManager, String path);
 
     /**
      * Detect the face landmarks in the given face bound (single face).
@@ -80,31 +70,7 @@ public interface IDLibFaceDetector {
      * @throws InvalidProtocolBufferException Fired if the message cannot be
      *                                        recognized
      */
-    List<DLibFace.Landmark> findLandmarksFromFace(Bitmap bitmap,
+    DLibFace findLandmarksFromFace(Bitmap bitmap,
                                                   Rect bound)
-            throws InvalidProtocolBufferException;
-
-    /**
-     * Detect the face landmarks in the given face bounds (multiple faces).
-     *
-     * @param bitmap     The given photo.
-     * @param faceBounds The list of face boundary.
-     * @return A list of {@link DLibFace.Landmark}.
-     * @throws InvalidProtocolBufferException Fired if the message cannot be
-     *                                        recognized
-     */
-    List<DLibFace> findLandmarksFromFaces(Bitmap bitmap,
-                                          List<Rect> faceBounds)
-            throws InvalidProtocolBufferException;
-
-    /**
-     * Detect face bounds and then detect the face landmarks for every face.
-     *
-     * @param bitmap The given photo.
-     * @return A list of {@link DLibFace.Landmark}.
-     * @throws InvalidProtocolBufferException Fired if the message cannot be
-     *                                        recognized
-     */
-    List<DLibFace> findFacesAndLandmarks(Bitmap bitmap)
             throws InvalidProtocolBufferException;
 }

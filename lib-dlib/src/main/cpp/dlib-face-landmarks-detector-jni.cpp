@@ -29,6 +29,7 @@
 #include <my/dlib/data/messages.pb.h>
 #include <dlib/dnn.h>
 #include <dlib/clustering.h>
+#include <android/asset_manager_jni.h>
 
 using namespace dlib;
 
@@ -55,9 +56,9 @@ template<template<int, template<typename> class, int, typename> class block, int
 using residual_down = add_prev2<avg_pool<2, 2, 2, 2, skip1<tag2<block<N, BN, 2, tag1<SUBNET>>>>>>;
 
 template<int N, template<typename> class BN, int stride, typename SUBNET>
-using block  = BN<con<N, 3, 3, 1, 1, relu<BN<con<N, 3, 3, stride, stride, SUBNET>>>>>;
+using block = BN<con<N, 3, 3, 1, 1, relu<BN<con<N, 3, 3, stride, stride, SUBNET>>>>>;
 
-template<int N, typename SUBNET> using ares      = relu<residual<block, N, affine, SUBNET>>;
+template<int N, typename SUBNET> using ares = relu<residual<block, N, affine, SUBNET>>;
 template<int N, typename SUBNET> using ares_down = relu<residual_down<block, N, affine, SUBNET>>;
 
 template<typename SUBNET> using alevel0 = ares_down<256, SUBNET>;
@@ -119,6 +120,12 @@ void convertBitmapToArray2d(JNIEnv *env, jobject bitmap, dlib::array2d<dlib::rgb
     // Unlock the bitmap.
     AndroidBitmap_unlockPixels(env, bitmap);
 }
+
+struct membuf : std::streambuf {
+    membuf(char *begin, char *end) {
+        this->setg(begin, begin, end);
+    }
+};
 
 // JNI ////////////////////////////////////////////////////////////////////////
 
@@ -185,20 +192,80 @@ JNI_METHOD(prepareFaceRecognitionDetector)(JNIEnv *env, jobject thiz, jstring re
 }
 
 extern "C" JNIEXPORT void JNICALL
-JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jstring detectorPath) {
+JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jobject assetManager,
+                                         jstring fileName) {
     LOGI("L%d: init sFaceLandmarksDetector", __LINE__);
-    const char *path = env->GetStringUTFChars(detectorPath, JNI_FALSE);
-
     // Profiler.
     Profiler profiler;
     profiler.start();
 
-    // We need a shape_predictor. This is the tool that will predict face
-    // landmark positions given an image and face bounding box.  Here we are just
-    // loading the model from the shape_predictor_68_face_landmarks.dat file you gave
-    // as a command line argument.
-    // Deserialize the shape detector.
-    dlib::deserialize(path) >> sFaceLandmarksDetector;
+    AAssetManager *mgr = AAssetManager_fromJava(env, assetManager);
+    if (mgr == NULL) {
+        return;
+    }
+    /*获取文件名并打开*/
+    jboolean iscopy;
+    const char *mfile = env->GetStringUTFChars(fileName, &iscopy);
+    AAsset *asset = AAssetManager_open(mgr, mfile, AASSET_MODE_UNKNOWN);
+    env->ReleaseStringUTFChars(fileName, mfile);
+    if (asset == NULL) {
+        return;
+    }
+
+    auto file_length = static_cast<size_t>(AAsset_getLength(asset));
+    if (file_length == 0) {
+        return;
+    }
+    char *model_buffer = (char *) malloc(file_length);
+    //read file data
+    AAsset_read(asset, model_buffer, file_length);
+    //the data has been copied to model_buffer, so , close it
+    AAsset_close(asset);
+
+    //char* to istream
+    membuf mem_buf(model_buffer, model_buffer + file_length);
+    std::istream in(&mem_buf);
+
+    //load shape_predictor_68_face_landmarks.dat from memory
+    dlib::deserialize(sFaceLandmarksDetector, in);
+    //free malloc
+    free(model_buffer);
+
+//    const char *file_name = env->GetStringUTFChars(fileName, nullptr);
+//    env->ReleaseStringUTFChars(fileName, file_name);
+//
+//    //get AAssetManager
+//    AAssetManager *native_asset = AAssetManager_fromJava(env, assetManager);
+//
+//    //open file
+//    AAsset *assetFile = AAssetManager_open(native_asset, file_name, AASSET_MODE_BUFFER);
+//    //get file length
+//    size_t file_length = static_cast<size_t>(AAsset_getLength(assetFile));
+//    char *model_buffer = (char *) malloc(file_length);
+//    //read file data
+//    AAsset_read(assetFile, model_buffer, file_length);
+//    //the data has been copied to model_buffer, so , close it
+//    AAsset_close(assetFile);
+//
+//    //LOGI("asset file length %d", file_length);
+//
+//    //char* to istream
+//    membuf mem_buf(model_buffer, model_buffer + file_length);
+//    std::istream in(&mem_buf);
+//
+////    const char *path = env->GetStringUTFChars(detectorPath, JNI_FALSE);
+//
+//    // We need a shape_predictor. This is the tool that will predict face
+//    // landmark positions given an image and face bounding box.  Here we are just
+//    // loading the model from the shape_predictor_68_face_landmarks.dat file you gave
+//    // as a command line argument.
+//    // Deserialize the shape detector.
+//    //load shape_predictor_68_face_landmarks.dat from memory
+//    dlib::deserialize(sFaceLandmarksDetector,in);
+
+
+    //free malloc
+    free(model_buffer);
 
     double interval = profiler.stopAndGetInterval();
 
@@ -206,7 +273,7 @@ JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jstring dete
     LOGI("L%d: sFaceLandmarksDetector.num_parts()=%lu", __LINE__,
          sFaceLandmarksDetector.num_parts());
 
-    env->ReleaseStringUTFChars(detectorPath, path);
+//    env->ReleaseStringUTFChars(fileName, file_name);
 
 //    if (sFaceLandmarksDetector.num_parts() != 68) {
 //        throwException(env, "It's not a 68 landmarks detector!");

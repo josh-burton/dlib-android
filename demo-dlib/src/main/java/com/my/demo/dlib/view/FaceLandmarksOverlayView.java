@@ -27,6 +27,7 @@ import android.graphics.Paint;
 
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.core.content.ContextCompat;
+
 import android.util.AttributeSet;
 
 import com.my.demo.dlib.protocol.IDLibFaceOverlay;
@@ -37,8 +38,8 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class FaceLandmarksOverlayView
-    extends AppCompatImageView
-    implements IDLibFaceOverlay {
+        extends AppCompatImageView
+        implements IDLibFaceOverlay {
 
     private final Object mMutex = new Object();
 
@@ -69,7 +70,7 @@ public class FaceLandmarksOverlayView
         super(context, attrs, defStyleAttr);
 
         final float density = getContext()
-            .getResources().getDisplayMetrics().density;
+                .getResources().getDisplayMetrics().density;
 
         mStrokeWidth = (int) (density * WIDTH);
         mStrokePaint = new Paint();
@@ -88,7 +89,7 @@ public class FaceLandmarksOverlayView
         // Calculate transform for rendering.
         // Fit inside.
         final float scale = Math.min((float) getWidth() / width,
-                                     (float) getHeight() / height);
+                (float) getHeight() / height);
         mScaleFromPreviewToView = scale;
     }
 
@@ -99,9 +100,9 @@ public class FaceLandmarksOverlayView
 
             for (int i = 0; i < faces.size(); ++i) {
                 mFaces.add(new DLibFace68(
-                    faces.get(i),
-                    mPreviewWidth,
-                    mPreviewHeight));
+                        faces.get(i),
+                        mPreviewWidth,
+                        mPreviewHeight));
             }
         }
 
@@ -114,7 +115,7 @@ public class FaceLandmarksOverlayView
 
         mRenderMatrix.reset();
         mRenderMatrix.setScale(mScaleFromPreviewToView,
-                               mScaleFromPreviewToView);
+                mScaleFromPreviewToView);
 
         canvas.save();
         canvas.concat(mRenderMatrix);
@@ -131,6 +132,11 @@ public class FaceLandmarksOverlayView
 
             // Render face's landmarks.
             for (int j = 0; j < face.getAllLandmarks().size(); ++j) {
+
+                DLibFace.Landmark landmark = face.getAllLandmarks().get(j);
+                canvas.drawCircle(landmark.x, landmark.y, 12, mStrokePaint);
+
+
                 // Render chin.
                 final List<DLibFace.Landmark> chinMarks = face.getChinLandmarks();
                 for (int k = 1; k < chinMarks.size(); ++k) {
@@ -169,7 +175,7 @@ public class FaceLandmarksOverlayView
                     if (k == leftEyeMarks.size() - 1) {
                         final DLibFace.Landmark first = leftEyeMarks.get(0);
                         canvas.drawLine(current.x, current.y,
-                                        first.x, first.y, mStrokePaint);
+                                first.x, first.y, mStrokePaint);
                     }
                 }
 
@@ -184,7 +190,7 @@ public class FaceLandmarksOverlayView
                     if (k == rightEyeMarks.size() - 1) {
                         final DLibFace.Landmark first = rightEyeMarks.get(0);
                         canvas.drawLine(current.x, current.y,
-                                        first.x, first.y, mStrokePaint);
+                                first.x, first.y, mStrokePaint);
                     }
                 }
 
@@ -208,7 +214,7 @@ public class FaceLandmarksOverlayView
                     if (k == innerLipsMarks.size() - 1) {
                         final DLibFace.Landmark first = innerLipsMarks.get(0);
                         canvas.drawLine(current.x, current.y,
-                                        first.x, first.y, mStrokePaint);
+                                first.x, first.y, mStrokePaint);
                     }
                 }
 
@@ -223,7 +229,7 @@ public class FaceLandmarksOverlayView
                     if (k == outerLipsMarks.size() - 1) {
                         final DLibFace.Landmark first = outerLipsMarks.get(0);
                         canvas.drawLine(current.x, current.y,
-                                        first.x, first.y, mStrokePaint);
+                                first.x, first.y, mStrokePaint);
                     }
                 }
             }

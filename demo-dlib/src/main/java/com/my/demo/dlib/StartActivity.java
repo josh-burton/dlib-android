@@ -22,14 +22,11 @@ package com.my.demo.dlib;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -82,30 +79,6 @@ public class StartActivity
         // List menu.
         mStartMenu.setAdapter(onCreateSampleMenu());
         mStartMenu.setOnItemClickListener(onClickSampleMenuItem());
-
-        copyAssetFile(this, DlibModelHelper.FACE68_FILE, new File(getFilesDir(), DlibModelHelper.FACE68_FILE).getAbsolutePath());
-    }
-
-    public static boolean copyAssetFile(Context context, String srcName, String dstName) {
-        try {
-            InputStream in = context.getAssets().open(srcName);
-            File outFile = new File(dstName);
-            if (outFile.exists()){
-                outFile.delete();
-            }
-            OutputStream out = new FileOutputStream(outFile);
-            byte[] buffer = new byte[1024];
-            int read;
-            while ((read = in.read(buffer)) != -1) {
-                out.write(buffer, 0, read);
-            }
-            in.close();
-            out.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     @Override
@@ -165,52 +138,6 @@ public class StartActivity
                                     .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
                         }
                     }),
-                new SampleMenuItem(
-                    "Detection using Google Vision and DLib",
-                    "There're two steps of a complete face landmarks detection:\n" +
-                    "(1) Detect face boundaries.\n" +
-                    "(2) Given the face boundaries, align the landmarks to the " +
-                    "faces.\n" +
-                    "Use 3rd party faces detection to boost finding the face " +
-                    "rectangles. Given the face rectangles, use DLib to do " +
-                    "landmarks alignment.\n" +
-                    "(about 30fps)",
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (checkPlayServices()) {
-                                startActivity(
-                                    new Intent(StartActivity.this,
-                                               SampleOfFacesAndLandmarksActivity2.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                            } else {
-                                new AlertDialog.Builder(StartActivity.this)
-                                    .setTitle(R.string.alert_unsupported_api)
-                                    .setMessage(R.string.alert_no_google_play_service)
-                                    .show();
-                            }
-                        }
-                    }),
-                new SampleMenuItem(
-                    "Camera2 API Experiment",
-                    "Exploring what is special of using Camera2 versus " +
-                    "depreciated Camera",
-                    new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                startActivity(
-                                    new Intent(StartActivity.this,
-                                               SampleOfCamera2ApiActivity1.class)
-                                        .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP));
-                            } else {
-                                new AlertDialog.Builder(StartActivity.this)
-                                    .setTitle(R.string.alert_unsupported_api)
-                                    .setMessage(R.string.alert_api_21_is_required)
-                                    .show();
-                            }
-                        }
-                    })
             });
     }
 

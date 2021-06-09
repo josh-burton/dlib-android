@@ -20,6 +20,7 @@
 
 package com.my.jni.dlib;
 
+import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.util.Log;
@@ -104,30 +105,10 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
     public native void prepareFaceRecognitionDetector(String path);
 
     @Override
-    public native void prepareFaceLandmarksDetector(String path);
+    public native void prepareFaceLandmarksDetector(AssetManager assetManager, String path);
 
     @Override
-    public List<DLibFace> findFaces(Bitmap bitmap)
-        throws InvalidProtocolBufferException {
-
-        // Call detector JNI.
-        final byte[] rawData = detectFaces(bitmap);
-        final Messages.FaceList rawFaces = Messages.FaceList.parseFrom(rawData);
-
-        // Convert raw data to my data structure.
-        final List<DLibFace> faces = new ArrayList<>();
-        for (int i = 0; i < rawFaces.getFacesCount(); ++i) {
-            final Messages.Face rawFace = rawFaces.getFaces(i);
-            final DLibFace face  = new DLibFace68(rawFace);
-
-            faces.add(face);
-        }
-
-        return faces;
-    }
-
-    @Override
-    public List<DLibFace.Landmark> findLandmarksFromFace(Bitmap bitmap,
+    public DLibFace findLandmarksFromFace(Bitmap bitmap,
                                                          Rect bound)
         throws InvalidProtocolBufferException {
         // Call detector JNI.
@@ -146,74 +127,8 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
             landmarks.add(landmark);
         }
 
-        return landmarks;
+        return new DLibFace68(landmarks);
     }
-
-    @Override
-    public List<DLibFace> findLandmarksFromFaces(Bitmap bitmap,
-                                                 List<Rect> faceBounds)
-        throws InvalidProtocolBufferException {
-
-        // Convert face bounds to protobuf message.
-        final List<Messages.RectF> msgBounds = new ArrayList<>();
-        for (Rect bound : faceBounds) {
-            msgBounds.add(Messages.RectF
-                              .newBuilder()
-                              .setLeft(bound.left)
-                              .setTop(bound.top)
-                              .setRight(bound.right)
-                              .setBottom(bound.bottom)
-                              .build());
-        }
-
-        // Detect landmarks.
-        final byte[] rawData = detectLandmarksFromFaces(
-            bitmap,
-            Messages.RectFList
-                .newBuilder()
-                .addAllRects(msgBounds)
-                .build()
-                .toByteArray());
-
-        // Convert the returned message to our structure.
-        final Messages.FaceList msgFaces = Messages.FaceList.parseFrom(rawData);
-        final List<DLibFace> faces = new ArrayList<>();
-        for (int i = 0; i < msgFaces.getFacesCount(); ++i) {
-            faces.add(new DLibFace68(msgFaces.getFaces(i)));
-        }
-
-        return faces;
-    }
-
-    @Override
-    public List<DLibFace> findFacesAndLandmarks(Bitmap bitmap)
-        throws InvalidProtocolBufferException {
-        // Do the face landmarks detection.
-        final byte[] rawData = detectFacesAndLandmarks(bitmap);
-        final Messages.FaceList rawFaces = Messages.FaceList.parseFrom(rawData);
-
-        // Convert raw data to my data structure.
-        final List<DLibFace> faces = new ArrayList<>();
-        for (int i = 0; i < rawFaces.getFacesCount(); ++i) {
-            final Messages.Face rawFace = rawFaces.getFaces(i);
-            final DLibFace face = new DLibFace68(rawFace);
-
-            faces.add(face);
-        }
-
-        return faces;
-    }
-
-    ///////////////////////////////////////////////////////////////////////////
-    // Protected / Private Methods ////////////////////////////////////////////
-
-    /**
-     * Detect all the faces from the given photo.
-     *
-     * @param bitmap The photo.
-     * @return The byte array of serialized {@link List< DLibFace >}.
-     */
-    private native byte[] detectFaces(Bitmap bitmap);
 
     /**
      * Detect landmarks for one face.
@@ -226,24 +141,4 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
                                                   long top,
                                                   long right,
                                                   long bottom);
-
-    /**
-     * Detect landmarks for the given faces.
-     *
-     * @param bitmap The small bitmap right covering a face.
-     * @return The byte array of serialized {@link DLibFace}.
-     */
-    private native byte[] detectLandmarksFromFaces(Bitmap bitmap,
-                                                   byte[] faceBounds);
-
-    /**
-     * Find the faces and landmarks from the given Bitmap.
-     * <br/>
-     * Before calling this method, make sure the face and landmarks detectors
-     * are both initialized. Otherwise a {@link RuntimeException} would be fired.
-     *
-     * @param bitmap The bitmap.
-     * @return The byte array of serialized {@link List< DLibFace >}.
-     */
-    private native byte[] detectFacesAndLandmarks(Bitmap bitmap);
 }

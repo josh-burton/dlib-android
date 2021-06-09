@@ -51,21 +51,6 @@ public class DLibFace68 extends DLibFace {
     private final RectF mBound = new RectF();
     private final List<Landmark> mLandmarks = new CopyOnWriteArrayList<>();
 
-    public DLibFace68(Messages.Face rawFace) {
-        // Bound.
-        mBound.set(rawFace.getBound().getLeft(),
-                   rawFace.getBound().getTop(),
-                   rawFace.getBound().getRight(),
-                   rawFace.getBound().getBottom());
-
-        // Landmarks.
-        for (int i = 0; i < rawFace.getLandmarksCount(); ++i) {
-            Messages.Landmark rawLandmark = rawFace.getLandmarks(i);
-
-            mLandmarks.add(new Landmark(rawLandmark));
-        }
-    }
-
     public DLibFace68(RectF bound) {
         mBound.set(bound);
     }

@@ -48,12 +48,5 @@
             android:name=".SampleOfFacesAndLandmarksActivity1">
         </activity>
 
-        <activity
-            android:name=".SampleOfFacesAndLandmarksActivity2">
-        </activity>
-
-        <activity
-            android:name=".SampleOfCamera2ApiActivity1">
-        </activity>
     </application>
 </manifest>

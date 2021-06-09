@@ -289,23 +289,23 @@ public class SampleOfFacesAndLandmarksActivity1
     }
 
     private Observable<?> initFaceLandmarksDetector() {
-        return Observable.just(new File(getFilesDir(),DlibModelHelper.FACE68_FILE))
+        return Observable.just(DlibModelHelper.FACE68_FILE)
             // Update progressbar message.
             .observeOn(AndroidSchedulers.mainThread())
-            .map(new Function<File, File>() {
+            .map(new Function<String, String>() {
                 @Override
-                public File apply(File face68ModelPath) throws Exception {
+                public String apply(String face68ModelPath) throws Exception {
                     showProgressBar("Initializing face detectors...");
                     return face68ModelPath;
                 }
             })
             // Deserialize the detector.
             .observeOn(Schedulers.io())
-            .map(new Function<File, Boolean>() {
+            .map(new Function<String, Boolean>() {
                 @Override
-                public Boolean apply(File face68ModelPath)
+                public Boolean apply(String face68ModelPath)
                     throws Exception {
-                    if (face68ModelPath == null || !face68ModelPath.exists()) {
+                    if (face68ModelPath == null) {
                         throw new RuntimeException(
                             "The face68 model is invalid.");
                     }
@@ -314,8 +314,7 @@ public class SampleOfFacesAndLandmarksActivity1
                         mLandmarksDetector.prepareFaceDetector();
                     }
                     if (!mLandmarksDetector.isFaceLandmarksDetectorReady()) {
-                        mLandmarksDetector.prepareFaceLandmarksDetector(
-                            face68ModelPath.getAbsolutePath());
+                        mLandmarksDetector.prepareFaceLandmarksDetector(getAssets(), face68ModelPath);
                     }
 
                     return true;

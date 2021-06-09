@@ -25,14 +25,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.YuvImage;
 import android.util.Log;
 import android.util.SparseArray;
 
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.face.Face;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.my.core.util.ProfilerUtil;
 import com.my.demo.dlib.protocol.ICameraMetadata;
@@ -98,13 +96,11 @@ public class DLibFaceAndLandmarksDetector extends Detector<DLibFace> {
         // Detect faces and landmarks.
         try {
             ProfilerUtil.startProfiling();
-            List<DLibFace> detFaces = mFaceDetector.findFacesAndLandmarks(bitmap);
+            DLibFace detFaces = mFaceDetector.findLandmarksFromFace(bitmap, new Rect(0,0,bitmap.getWidth(),bitmap.getHeight()));
             mDetFaces.clear();
-            for (int i = 0; i < detFaces.size(); ++i) {
-                mDetFaces.put(i, detFaces.get(i));
-            }
-            Log.d("xyz", String.format("Detect %d face with landmarks (took %.3f ms)",
-                                       detFaces.size(),
+                mDetFaces.put(0, detFaces);
+            Log.d("xyz", String.format("Detect face with landmarks %d (took %.3f ms)",
+                                       detFaces.getAllLandmarks().size(),
                                        ProfilerUtil.stopProfiling()));
 
             Log.d("xyz", String.format(
