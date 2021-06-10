@@ -18,7 +18,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-package com.my.jni.dlib;
+package nz.co.colensobbdo.dlib;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -26,12 +26,11 @@ import android.graphics.Rect;
 import android.util.Log;
 
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.my.jni.dlib.data.DLibFace;
-import com.my.jni.dlib.data.DLibFace68;
-import com.my.jni.dlib.data.Messages;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import nz.co.colensobbdo.dlib.proto.Messages;
 
 public class DLibLandmarks68Detector implements IDLibFaceDetector {
 
@@ -56,6 +55,16 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
             throw new RuntimeException(
                 "\"protobuf-lite-3.2.0\" not found; check that the correct " +
                 "native libraries are present in the APK.");
+        }
+
+        // TODO: Load library in worker thread?
+        try {
+            System.loadLibrary("dlib");
+            Log.d("jni", "libdlib.so is loaded");
+        } catch (UnsatisfiedLinkError error) {
+            throw new RuntimeException(
+                "\"dlib\" not found; check that the correct native libraries " +
+                "are present in the APK.");
         }
 
         // TODO: Load library in worker thread?
@@ -99,8 +108,7 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
 
     @Override
     public DLibFace findLandmarksFromFace(Bitmap bitmap,
-                                                         Rect bound)
-        throws InvalidProtocolBufferException {
+                                                         Rect bound) throws InvalidProtocolBufferException {
         // Call detector JNI.
         final byte[] rawData = detectLandmarksFromFace(
             bitmap, bound.left, bound.top, bound.right, bound.bottom);
