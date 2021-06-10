@@ -265,7 +265,7 @@ JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jobject asse
 
 
     //free malloc
-    free(model_buffer);
+//    free(model_buffer);
 
     double interval = profiler.stopAndGetInterval();
 
