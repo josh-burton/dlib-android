@@ -31,11 +31,12 @@ import androidx.core.content.ContextCompat;
 import android.util.AttributeSet;
 
 import com.my.demo.dlib.protocol.IDLibFaceOverlay;
-import com.my.jni.dlib.data.DLibFace;
-import com.my.jni.dlib.data.DLibFace68;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import nz.co.colensobbdo.dlib.DLibFace;
+import nz.co.colensobbdo.dlib.DLibFace68;
 
 public class FaceLandmarksOverlayView
         extends AppCompatImageView

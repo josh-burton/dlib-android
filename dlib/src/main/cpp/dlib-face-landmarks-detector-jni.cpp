@@ -26,7 +26,7 @@
 #include <dlib/image_io.h>
 #include "jni.h"
 #include "profiler.h"
-#include "include/proto/messages.pb.h"
+#include "messages.pb.h"
 #include <dlib/dnn.h>
 #include <dlib/clustering.h>
 #include <android/asset_manager_jni.h>
@@ -265,7 +265,7 @@ JNI_METHOD(prepareFaceLandmarksDetector)(JNIEnv *env, jobject thiz, jobject asse
 
 
     //free malloc
-    free(model_buffer);
+//    free(model_buffer);
 
     double interval = profiler.stopAndGetInterval();
 

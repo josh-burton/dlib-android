@@ -35,12 +35,13 @@ import com.google.protobuf.InvalidProtocolBufferException;
 import com.my.core.util.ProfilerUtil;
 import com.my.demo.dlib.protocol.ICameraMetadata;
 import com.my.demo.dlib.protocol.IDLibFaceOverlay;
-import com.my.jni.dlib.IDLibFaceDetector;
-import com.my.jni.dlib.data.DLibFace;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+
+import nz.co.colensobbdo.dlib.DLibFace;
+import nz.co.colensobbdo.dlib.IDLibFaceDetector;
 
 /**
  * A detector using DLib face detector and DLib landmarks detector.

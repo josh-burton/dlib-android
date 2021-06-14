@@ -8,3 +8,4 @@
 **/.externalNativeBuild
 **/captures
 **crashlytics**
+/dlib/.cxx/

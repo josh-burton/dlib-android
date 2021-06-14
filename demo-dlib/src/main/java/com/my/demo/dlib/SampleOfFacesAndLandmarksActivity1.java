@@ -39,9 +39,6 @@ import com.my.demo.dlib.protocol.ICameraMetadata;
 import com.my.demo.dlib.util.DlibModelHelper;
 import com.my.demo.dlib.view.CameraSourcePreview;
 import com.my.demo.dlib.view.FaceLandmarksOverlayView;
-import com.my.jni.dlib.DLibLandmarks68Detector;
-import com.my.jni.dlib.IDLibFaceDetector;
-import com.my.jni.dlib.data.DLibFace;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
@@ -57,6 +54,9 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
+import nz.co.colensobbdo.dlib.DLibFace;
+import nz.co.colensobbdo.dlib.DLibLandmarks68Detector;
+import nz.co.colensobbdo.dlib.IDLibFaceDetector;
 
 public class SampleOfFacesAndLandmarksActivity1
     extends AppCompatActivity

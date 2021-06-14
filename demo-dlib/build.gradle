@@ -94,7 +94,8 @@ dependencies {
     compile(name: "lib-core-release", ext: "aar")
     compile(name: "lib-reactive-release", ext: "aar")
     compile(name: "lib-widget-release", ext: "aar")
-    compile project(":lib-dlib")
+//    compile project(":lib-dlib")
+    compile project(":dlib")
 
     testCompile rootProject.ext.dep.testJunit
     testCompile rootProject.ext.dep.testMockito

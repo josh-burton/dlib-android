@@ -1,2 +1,3 @@
 include ':demo-dlib',
-        ':lib-dlib'
+        ':dlib'
+//        ':lib-dlib'

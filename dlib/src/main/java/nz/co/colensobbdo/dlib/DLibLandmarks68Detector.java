@@ -47,25 +47,25 @@ public class DLibLandmarks68Detector implements IDLibFaceDetector {
                 "libraries are present in the APK.");
         }
 
-        // TODO: Load library in worker thread?
-        try {
-            System.loadLibrary("protobuf-lite-3.2.0");
-            Log.d("jni", "libprotobuf-lite-3.2.0.so is loaded");
-        } catch (UnsatisfiedLinkError error) {
-            throw new RuntimeException(
-                "\"protobuf-lite-3.2.0\" not found; check that the correct " +
-                "native libraries are present in the APK.");
-        }
+//        // TODO: Load library in worker thread?
+//        try {
+//            System.loadLibrary("protobuf-lite-3.2.0");
+//            Log.d("jni", "libprotobuf-lite-3.2.0.so is loaded");
+//        } catch (UnsatisfiedLinkError error) {
+//            throw new RuntimeException(
+//                "\"protobuf-lite-3.2.0\" not found; check that the correct " +
+//                "native libraries are present in the APK.");
+//        }
 
-        // TODO: Load library in worker thread?
-        try {
-            System.loadLibrary("dlib");
-            Log.d("jni", "libdlib.so is loaded");
-        } catch (UnsatisfiedLinkError error) {
-            throw new RuntimeException(
-                "\"dlib\" not found; check that the correct native libraries " +
-                "are present in the APK.");
-        }
+//        // TODO: Load library in worker thread?
+//        try {
+//            System.loadLibrary("dlib");
+//            Log.d("jni", "libdlib.so is loaded");
+//        } catch (UnsatisfiedLinkError error) {
+//            throw new RuntimeException(
+//                "\"dlib\" not found; check that the correct native libraries " +
+//                "are present in the APK.");
+//        }
 
         // TODO: Load library in worker thread?
         try {

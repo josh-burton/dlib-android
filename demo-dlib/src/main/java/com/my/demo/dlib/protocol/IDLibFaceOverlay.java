@@ -20,9 +20,9 @@
 
 package com.my.demo.dlib.protocol;
 
-import com.my.jni.dlib.data.DLibFace;
-
 import java.util.List;
+
+import nz.co.colensobbdo.dlib.DLibFace;
 
 public interface IDLibFaceOverlay {
 

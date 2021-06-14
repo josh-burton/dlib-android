@@ -1,0 +1,3 @@
+[submodule "dlib/libs/protobuf"]
+	path = dlib/libs/protobuf
+	url = https://github.com/protocolbuffers/protobuf

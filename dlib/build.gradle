@@ -1,4 +1,5 @@
 plugins {
+    id "com.google.protobuf"
     id 'com.android.library'
 }
 
@@ -24,8 +25,12 @@ android {
                 arguments "-DANDROID_PLATFORM=android-16",
                         "-DANDROID_TOOLCHAIN=clang",
                         "-DANDROID_STL=c++_shared",
-                        "-DANDROID_CPP_FEATURES=rtti exceptions"
+                        "-DANDROID_CPP_FEATURES=rtti exceptions",
+                        "-Dprotobuf_BUILD_TESTS=OFF",
+                        "-Dprotobuf_WITH_ZLIB=OFF"
+
                 cppFlags "-std=c++11 -frtti -fexceptions"
+                targets "libprotobuf-lite", "dlib", "dlib_jni"
             }
         }
 //        externalNativeBuild {
@@ -38,7 +43,7 @@ android {
 //    ndkVersion "22.1.7171670"
     externalNativeBuild {
         cmake {
-            path file('src/main/cpp/CMakeLists.txt')
+            path file('CMakeLists.txt')
             version '3.18.1'
         }
     }
@@ -53,9 +58,45 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    packagingOptions {
+        exclude "**/*.proto"
+    }
+
+    sourceSets {
+        main {
+            proto {
+            }
+        }
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.17.3'
+    }
+    generateProtoTasks {
+        generatedFilesBaseDir = "$projectDir/src/generated"
+
+        // all() returns the collection of all protoc tasks
+        all().each { task ->
+
+            task.builtins {
+                java {
+                    option "lite"
+                }
+                // Add cpp output without any option.
+                // DO NOT omit the braces if you want this builtin to be added.
+                // This yields
+                // "--cpp_out=/path/to/output" on the protoc commandline.
+                cpp {
+                    option "lite"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.+'
-    api 'com.google.protobuf:protobuf-java:3.17.3'
+    api 'com.google.protobuf:protobuf-javalite:3.17.3'
 }
